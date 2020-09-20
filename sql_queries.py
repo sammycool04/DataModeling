@@ -104,7 +104,45 @@ AND ss.duration = %s
 ;
 """)
 
+
+# DATA QUALITY CHECK
+check_deupliates_songplay_table =  ("""
+SELECT songplay_id, COUNT(*)
+FROM songplay_table
+GROUP BY songplay_id
+HAVING COUNT(*) > 1
+;
+""")
+
+
+check_deupliates_user_table =  ("""
+SELECT user_id, COUNT(*)
+FROM users
+GROUP BY user_id
+HAVING COUNT(*) > 1
+;
+""")
+
+check_deupliates_song_table =  ("""
+SELECT song_id, COUNT(*)
+FROM songs
+GROUP BY song_id
+HAVING COUNT(*) > 1
+;
+""")
+
+
+# DELETE
+delete_user_table =  ("""
+DELETE FROM users
+;
+""")
+
+
+
+
 # QUERY LISTS
 
 create_table_queries = [songplay_table_create, user_table_create, song_table_create, artist_table_create, time_table_create]
 drop_table_queries = [songplay_table_drop, user_table_drop, song_table_drop, artist_table_drop, time_table_drop]
+delete_table_queries = [delete_user_table]
